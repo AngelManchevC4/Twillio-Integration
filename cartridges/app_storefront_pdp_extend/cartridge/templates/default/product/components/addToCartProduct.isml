@@ -11,11 +11,13 @@
 
         <isif condition="${!product.available}">
             <h5>${subscriptionForm.infoMessage.label}</h5>
-            <iscomment> <isif condition="${clientAssetMessage.body !== null}">
-                <h5>${clientAssetMessage.body}</h5>
-            </isif> </iscomment>
+            <iscomment>
+                <isif condition="${clientAssetMessage.body !== null}">
+                    <h5>${clientAssetMessage.body}</h5>
+                </isif>
+            </iscomment>
 
-            <h5>${clientAssetMessage.body ? clientAssetMessage.body : ""}</h5>
+            <isprint value=" ${clientAssetMessage.body ? clientAssetMessage.body : ""}" encoding="off" />
 
         </isif>
 
