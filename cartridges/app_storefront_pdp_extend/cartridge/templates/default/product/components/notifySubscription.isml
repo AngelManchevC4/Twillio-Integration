@@ -1,0 +1,93 @@
+<form id="phoneForm" class="row" action="${URLUtils.url('Product-Subscribe')}" method="POST">
+
+    <div class="col-sm-12 text-left">
+        <isif condition="${!product.available}">
+            <h5>
+                <isprint value="${pdict.subscriptionForm.infomessage.label}" encoding="off" />
+            </h5>
+            <isprint value=" ${clientAssetMessage.body ? clientAssetMessage.body : ""}" encoding="off" />
+
+        </isif>
+    </div>
+
+    <div class="col-sm-8">
+        <iscomment> <label class="form-control-label" for="notificationSubscription">
+                <isprint value="${pdict.subscriptionForm.customer.phonenumber.label}" encoding="htmlcontent" />
+            </label> </iscomment>
+        <input type="text" class="form-control" id="phoneNumberInput" placeholder="Enter a Phone Number" <isprint
+            value="${pdict.subscriptionForm.customer.phonenumber.attributes}" encoding="off" /> />
+        <div class="invalid-feedback"></div>
+    </div>
+
+    <button id="formButton" type="submit" class="btn btn-success col-sm-4">Notify Me!</button>
+
+    <input type="hidden" id="customerPhone" value="${customerPhoneNumber}" />
+
+    <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}" />
+
+    <div id="errorAlert" class="alert-danger col-sm-12 mt-2" role="alert">
+        Invalid Phone Number
+    </div>
+
+    <div id="successAlert" class="alert-success col-sm-12 mt-2" role="alert">
+        Successfully Subscribed !
+    </div>
+
+</form>
+
+
+
+<script>
+    let phoneInput = document.getElementById("phoneNumberInput");
+    let customerPhone = document.getElementById("customerPhone");
+    let formButton = document.getElementById("formButton");
+
+    let errorAlert = document.getElementById("errorAlert");
+    let successAlert = document.getElementById("successAlert");
+    errorAlert.style.display ="none";
+    successAlert.style.display ="none";
+
+    let phoneForm = document.getElementById("phoneForm");
+
+    let phoneRegex = /^\(?([2-9][0-8][0-9])\)?[\-\. ]?([2-9][0-9]{2})[\-\. ]?([0-9]{4})(\s*x[0-9]+)?$/;
+
+    phoneInput.addEventListener("input",function(e){
+
+        let inputValue = e.target.value;
+
+        // (!phoneRegex.test(inputValue)) ? phoneInput.classList.add('is-invalid') : phoneInput.classList.remove('is-invalid')
+        
+        if(!phoneRegex.test(inputValue)){
+            phoneInput.classList.add('is-invalid')
+            errorAlert.style.display ="block"; 
+        }else{
+            phoneInput.classList.remove('is-invalid')
+            errorAlert.style.display ="none";
+        }
+    })
+
+    phoneForm.addEventListener("submit",function(){
+        successAlert.style.display="block";
+    })
+
+    formButton.addEventListener("click",function(){
+        console.log("test");
+    })
+
+    if(customerPhone != "null"){
+            window.addEventListener("load",function(){
+            phoneInput.value = customerPhone.value;
+            console.log(customerPhone);
+        })
+    }
+
+
+
+
+    // phoneForm.addEventListener("submit",function(event){
+    //     event.preventDefault();
+
+    //     console.log(phoneInput.value);
+    // })
+
+</script>

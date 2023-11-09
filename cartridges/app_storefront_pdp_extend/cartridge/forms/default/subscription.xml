@@ -1,10 +1,23 @@
 <?xml version="1.0"?>
 <form xmlns="http://www.demandware.com/xml/form/2008-04-19" secure="false">
 
-	<field
-		formid="infoMessage"
-		label="label.subscription.infomessage.info"
-		type="string"
-		mandatory="false" />
 
+	<field
+		formid="infomessage"
+		label="label.input.info.subscription"
+		mandatory="false"
+		type="string" />
+
+	<group formid="customer">
+
+		<field
+			formid="phonenumber"
+			label="label.input.phone.profile"
+			mandatory="true"
+			regexp="^\(?([2-9][0-8][0-9])\)?[\-\. ]?([2-9][0-9]{2})[\-\. ]?([0-9]{4})(\s*x[0-9]+)?$"
+			missing-error="error.message.required"
+			parse-error="error.message.parse.phone.profile.form"
+			type="string" />
+
+	</group>
 </form>

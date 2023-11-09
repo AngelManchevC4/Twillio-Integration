@@ -11,6 +11,8 @@
     <isset name="isProductSet" value="${pdict.product.productType === 'set'}" scope="page" />
     <isset name="clientAssetMessage" value="${pdict.content.custom}" scope="page" />
     <isset name="subscriptionForm" value="${pdict.subscriptionForm}" scope="page" />
+    <isset name="customerPhoneNumber" value="${pdict.customerPhone}" scope="page" />
+    
 
     <isobject object="${product.raw}" view="detail" />
         <div class="container product-detail product-wrapper" data-pid="${product.id}">
