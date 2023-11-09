@@ -41,12 +41,15 @@ function getAllAttrValues(
         var isSelected = (selectedValue && selectedValue.equals(value)) || false;
         var valueUrl = '';
 
+        variationModel.hasOrderableVariants
+
         var processedAttr = {
             id: value.ID,
             description: value.description,
             displayValue: value.displayValue,
             value: value.value,
             selected: isSelected,
+            ordable: variationModel.hasOrderableVariants(attr, value),
         };
 
         valueUrl = (isSelected && endPoint !== 'Show')
