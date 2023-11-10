@@ -1,0 +1,11 @@
+{
+    "step-types": {
+        "script-module-step": [
+            {
+                "@type-id": "custom.twilio.sms.notification",
+                "description": "Script for sending twilio sms notifications",
+                "module": "int_twilio/cartridge/scripts/steps/twilioNotificationJob.js"
+            }
+        ]
+    }
+}
