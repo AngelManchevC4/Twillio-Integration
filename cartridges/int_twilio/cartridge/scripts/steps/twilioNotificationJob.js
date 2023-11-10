@@ -5,8 +5,13 @@ var CSVStreamWriter = require('dw/io/CSVStreamWriter');
 var Transaction = require('dw/system/Transaction');
 var Logger = require('dw/system/Logger');
 
+
+var twilioSendSms = require("~/cartridge/scripts/services/twilioSendSms")
+
 module.exports.execute = function () {
     var notificationObjIterator = CustomObjectMgr.getAllCustomObjects('Product-Subscribe-Notification');
+
+    twilioSendSms.twilioSendSms().call({ To: "+359884676766",From:"+15168064395", Body: "hihi" });
 
     var file;
     var fileWrite;
@@ -19,6 +24,8 @@ module.exports.execute = function () {
         csv = new CSVStreamWriter(fileWrite);
         csv.writeNext(["phone", "creatdate", "customerobj"]);
         csv.writeNext(["---", "---", "---", "---"]);
+
+
 
         while (notificationObjIterator.hasNext()) {
             var notification = notificationObjIterator.next();

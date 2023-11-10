@@ -74,7 +74,7 @@
         console.log("test");
     })
 
-    if(customerPhone != "null"){
+    if(customerPhone.includes("null")){
             window.addEventListener("load",function(){
             phoneInput.value = customerPhone.value;
             console.log(customerPhone);
