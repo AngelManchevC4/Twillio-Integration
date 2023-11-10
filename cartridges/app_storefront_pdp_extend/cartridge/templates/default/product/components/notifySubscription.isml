@@ -1,3 +1,9 @@
+<isscript>
+        var assets = require('*/cartridge/scripts/assets');
+        assets.addJs('/js/notify.js');
+</isscript>
+
+
 <form id="phoneForm" class="row" action="${URLUtils.url('Product-Subscribe')}" method="POST">
 
     <div class="col-sm-12 text-left">
@@ -21,9 +27,13 @@
 
     <button id="formButton" type="submit" class="btn btn-success col-sm-4">Notify Me!</button>
 
+    <input type="hidden" class="subscribeFormProductId" value="${product.id}" <isprint
+        value="${pdict.subscriptionForm.customer.productsubscribeid.attributes}" encoding="off" />
+    />
+
     <input type="hidden" id="customerPhone" value="${customerPhoneNumber}" />
 
-    <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}" />
+    <input type="hidden" id="csrfToken" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}" />
 
     <div id="errorAlert" class="alert-danger col-sm-12 mt-2" role="alert">
         Invalid Phone Number
@@ -37,7 +47,8 @@
 
 
 
-<script>
+<iscomment>
+    <script>
     let phoneInput = document.getElementById("phoneNumberInput");
     let customerPhone = document.getElementById("customerPhone");
     let formButton = document.getElementById("formButton");
@@ -74,7 +85,7 @@
         console.log("test");
     })
 
-    if(customerPhone.includes("null")){
+    if(customerPhone){
             window.addEventListener("load",function(){
             phoneInput.value = customerPhone.value;
             console.log(customerPhone);
@@ -91,3 +102,4 @@
     // })
 
 </script>
+</iscomment>

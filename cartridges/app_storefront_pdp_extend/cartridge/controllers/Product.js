@@ -95,16 +95,13 @@ server.post('Subscribe', server.middleware.https, csrfProtection.validateAjaxReq
 
     var subscriptionResult = CustomObjectMgr.getCustomObject(type, subscriptionForm.customer.phonenumber.value);
 
-    req.querystring.parameters;
+    var primaryKey = subscriptionForm.customer.phonenumber.value +"-"+subscriptionForm.customer.productsubscribeid.value;
 
-    let type = "asd";
-    var primaryKey = subscriptionForm.customer.phonenumber.value + req.querystring.parameters;
-
-    // if (subscriptionForm.valid) {
-    //     Transaction.wrap(function () {
-    //         var subscriptionEntry = CustomObjectMgr.createCustomObject(type, subscriptionForm.customer.phonenumber.value);
-    //     })
-    // }
+    if (subscriptionForm.valid) {
+        Transaction.wrap(function () {
+            var subscriptionEntry = CustomObjectMgr.createCustomObject(type, primaryKey);
+        })
+    }
 
     res.redirect("Home-Show");
 

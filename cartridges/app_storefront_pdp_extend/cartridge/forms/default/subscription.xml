@@ -14,10 +14,16 @@
 			formid="phonenumber"
 			label="label.input.phone.profile"
 			mandatory="true"
-			regexp="^\(?([2-9][0-8][0-9])\)?[\-\. ]?([2-9][0-9]{2})[\-\. ]?([0-9]{4})(\s*x[0-9]+)?$"
+			regexp="^\+359\d{9}$"
 			missing-error="error.message.required"
 			parse-error="error.message.parse.phone.profile.form"
 			type="string" />
+
+		<field
+			formid="productsubscribeid"
+			missing-error="error.message.required"
+			type="string"
+			mandatory="true" />
 
 	</group>
 </form>
