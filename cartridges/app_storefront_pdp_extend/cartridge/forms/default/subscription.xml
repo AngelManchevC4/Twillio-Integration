@@ -25,5 +25,11 @@
 			type="string"
 			mandatory="true" />
 
+		<field
+			formid="productsubscribename"
+			missing-error="error.message.required"
+			type="string"
+			mandatory="true" />
+
 	</group>
 </form>

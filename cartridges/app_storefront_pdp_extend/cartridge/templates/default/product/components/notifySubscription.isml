@@ -27,8 +27,12 @@
 
     <button id="formButton" type="submit" class="btn btn-success col-sm-4">Notify Me!</button>
 
-    <input type="hidden" class="subscribeFormProductId" value="${product.id}" <isprint
+    <input type="hidden" value="${product.id}" <isprint
         value="${pdict.subscriptionForm.customer.productsubscribeid.attributes}" encoding="off" />
+    />
+
+    <input type="hidden" value="${product.productName}" <isprint
+        value="${pdict.subscriptionForm.customer.productsubscribename.attributes}" encoding="off" />
     />
 
     <input type="hidden" id="customerPhone" value="${customerPhoneNumber}" />

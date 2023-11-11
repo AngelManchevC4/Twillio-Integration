@@ -44,9 +44,13 @@ $(document).ready(function () {
             dataType: "text",
             success: function () {
                 console.log("Success");
+                $successAlert.css("display", "none");
+                $errorAlert.css("display", "none")
             },
             error: function (err) {
                 console.log("Error");
+                $successAlert.css("display", "none");
+                $errorAlert.css("display", "block")
             }
         })
     })
