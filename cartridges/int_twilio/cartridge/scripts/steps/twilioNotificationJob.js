@@ -39,6 +39,10 @@ module.exports.execute = function () {
             //     twilioSendSms.twilioSendSms().call({ To: element, From: "+15168064395", Body: `Product : ${customersProductName.element} with ID: ${customersProductID.element} is back in stock !!!`});
             // });
 
+            //need to add logic to check if the product is with quantity higher than 0 if yes
+            //                                                                                =>send sms, delete numbers
+            //                                                                         if no
+            //                                                                                =>do nothing
             //need to add logic to delete all the numbers and even the productId after sending the sms
         }
 
