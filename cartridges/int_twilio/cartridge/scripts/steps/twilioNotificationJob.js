@@ -38,10 +38,12 @@ module.exports.execute = function () {
             // customersPhone.forEach(element => {
             //     twilioSendSms.twilioSendSms().call({ To: element, From: "+15168064395", Body: `Product : ${customersProductName.element} with ID: ${customersProductID.element} is back in stock !!!`});
             // });
+
+            //need to add logic to delete all the numbers and even the productId after sending the sms
         }
 
         for (var i = 0; i < customersPhone.length-2; i++) {
-            twilioSendSms.twilioSendSms().call({ To: customersPhone[i], From: "+15168064395", Body: `Product : ${customersProductName[i]} with ID: ${customersProductID} is back in stock !!!` });
+            twilioSendSms.twilioSendSms().call({ To: customersPhone[i], From: "+15168064395", Body: `Product : ${customersProductName[i]} with ID: ${customersProductID[i]} is back in stock !!!` });
         }
 
     } catch (e) {
