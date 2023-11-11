@@ -86,20 +86,22 @@ server.post('Subscribe', server.middleware.https, csrfProtection.validateAjaxReq
     var CustomerMgr = require('dw/customer/CustomerMgr');
     var Resource = require('dw/web/Resource');
     var URLUtils = require('dw/web/URLUtils');
+    var CustomObjectMgr = require('dw/object/CustomObjectMgr');
 
     var type = "Product-Subscribe-Notification";
 
-    var CustomObjectMgr = require('dw/object/CustomObjectMgr');
-
     var subscriptionForm = server.forms.getForm('subscription');
-
-    var subscriptionResult = CustomObjectMgr.getCustomObject(type, subscriptionForm.customer.phonenumber.value);
-
-    var primaryKey = subscriptionForm.customer.phonenumber.value +"-"+subscriptionForm.customer.productsubscribeid.value;
 
     if (subscriptionForm.valid) {
         Transaction.wrap(function () {
-            var subscriptionEntry = CustomObjectMgr.createCustomObject(type, primaryKey);
+            var subscriptionEntry = CustomObjectMgr.getCustomObject(type, subscriptionForm.customer.productsubscribeid.value);
+            if (subscriptionEntry) {
+                subscriptionEntry.custom.clientNumber = subscriptionEntry.custom.clientNumber + ' - ' + subscriptionForm.customer.phonenumber.value;
+            } else {
+                subscriptionEntry = CustomObjectMgr.createCustomObject(type, subscriptionForm.customer.productsubscribeid.value);
+                subscriptionEntry.custom.clientNumber = subscriptionForm.customer.phonenumber.value;
+            }
+
         })
     }
 
