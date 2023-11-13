@@ -4,8 +4,8 @@ var FileWriter = require('dw/io/FileWriter');
 var CSVStreamWriter = require('dw/io/CSVStreamWriter');
 var Transaction = require('dw/system/Transaction');
 var Logger = require('dw/system/Logger');
-
-
+var ProductMgr = require('dw/catalog/ProductMgr');
+var ProductInventoryMgr = require('dw/catalog/ProductInventoryMgr');
 var twilioSendSms = require("~/cartridge/scripts/services/twilioSendSms")
 
 module.exports.execute = function () {
@@ -25,29 +25,29 @@ module.exports.execute = function () {
             customersProductID = notificationObj.custom.productID;
             customersProductName = notificationObj.custom.productName;
 
-            // for (var i = 0; i < customersPhones.length; i++) {
-            //     twilioSendSms.twilioSendSms().call({ To: customersPhones[i], From: "+15168064395", Body: `Product : ${customersProductName} with ID: ${customersProductID} is back in stock !!!` });
-            // }
+            var product = ProductMgr.getProduct(customersProductID);
+            var productATSQuantity = ProductInventoryMgr.getInventoryList("inventory_m").getRecord(customersProductID).ATS.value;
 
-            customersPhones.forEach(element => {
-                twilioSendSms.twilioSendSms().call({ To: element, From: "+15168064395", Body: `Product : ${customersProductName} with ID: ${customersProductID} is back in stock !!!`});
-            });
+            if (productATSQuantity > 0) {
+                customersPhones.forEach(element => {
+                    twilioSendSms.twilioSendSms().call({ To: element, From: "+15168064395", Body: `Product : ${customersProductName} with ID: ${customersProductID} is back in stock !!!` });
+                    Transaction.wrap(function () {
+                        CustomObjectMgr.remove(notificationObj);
+                    })
+                });
 
-            //need to add logic to check if the product is with quantity higher than 0 if yes
-            //                                                                                =>send sms, delete numbers
-            //                                                                         if no
-            //                                                                                =>do nothing
-            //need to add logic to delete all the numbers and even the productId after sending the sms
-
-
-            // Transaction.wrap(function () {
-            //     CustomObjectMgr.remove(customers);
-            // })
+            } else {
+                customersPhones.forEach(element => {
+                    twilioSendSms.twilioSendSms().call({
+                        To: element, From: "+15168064395", Body: `Product isn't restocked yet. You will be contacted when restocked !`
+                    });
+                });
+            }
 
         }
 
     } catch (e) {
         var logger = Logger.getLogger("error.notification.job");
-        logger.error("notification Job Error", e);
+        logger.error("notification Job Error", "error");
     }
 }

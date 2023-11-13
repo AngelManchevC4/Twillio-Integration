@@ -9,7 +9,7 @@
     <div class="col-sm-12 text-left">
         <isif condition="${!product.available}">
             <h5>
-                <isprint value="${pdict.subscriptionForm.infomessage.label}" encoding="off" />
+                ${Resource.msg('label.input.info.subscription', 'subscription',null)}
             </h5>
             <isprint value=" ${clientAssetMessage.body ? clientAssetMessage.body : ""}" encoding="off" />
 
@@ -25,7 +25,8 @@
         <div class="invalid-feedback"></div>
     </div>
 
-    <button id="formButton" type="submit" class="btn btn-success col-sm-4">Notify Me!</button>
+    <button id="formButton" type="submit" class="btn btn-success col-sm-4">${Resource.msg('notify.label.button', 'subscription', null)}
+    </button>
 
     <input type="hidden" value="${product.id}" <isprint
         value="${pdict.subscriptionForm.customer.productsubscribeid.attributes}" encoding="off" />
@@ -40,11 +41,11 @@
     <input type="hidden" id="csrfToken" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}" />
 
     <div id="errorAlert" class="alert-danger col-sm-12 mt-2" role="alert">
-        Invalid Phone Number
+        ${Resource.msg('alert.label.error', 'subscription',null)}
     </div>
 
     <div id="successAlert" class="alert-success col-sm-12 mt-2" role="alert">
-        Successfully Subscribed !
+        ${Resource.msg('alert.label.success', 'subscription',null)}
     </div>
 
 </form>

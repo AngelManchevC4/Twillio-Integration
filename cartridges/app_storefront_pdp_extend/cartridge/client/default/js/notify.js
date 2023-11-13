@@ -19,7 +19,7 @@ $(document).ready(function () {
     $errorAlert.css("display", "none");
     $successAlert.css("display", "none");
 
-    $phoneInput.on("change", function (e) {
+    $phoneInput.on("input", function (e) {
 
         if (!phoneRegex.test(e.target.value)) {
             $phoneInput.addClass("is-invalid");
@@ -56,13 +56,12 @@ $(document).ready(function () {
     })
 
     $formButton.click(function () {
-        console.log("test");
+
     })
 
     if ($customerPhone.val()) {
         $(window).on('load', function () {
             $phoneInput.val($customerPhone.val());
-            console.log($customerPhone);
         });
     }
 
