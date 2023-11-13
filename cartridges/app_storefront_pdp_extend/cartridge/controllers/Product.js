@@ -96,12 +96,17 @@ server.post('Subscribe', server.middleware.https, csrfProtection.validateAjaxReq
         Transaction.wrap(function () {
             var subscriptionEntry = CustomObjectMgr.getCustomObject(type, subscriptionForm.customer.productsubscribeid.value);
             if (subscriptionEntry) {
-                subscriptionEntry.custom.clientNumber = `${subscriptionEntry.custom.clientNumber}${subscriptionForm.customer.phonenumber.value}&`;
-                subscriptionEntry.custom.productName = `${subscriptionEntry.custom.productName}${subscriptionForm.customer.productsubscribename.value}&`
+                var subsArray = subscriptionEntry.custom.phoneNumbers;
+                let phoneNumbersArray = [];
+                for (let i = 0; i < subsArray.length; i++) {
+                    phoneNumbersArray.push(subsArray[i]);
+                }
+                phoneNumbersArray.push(subscriptionForm.customer.phonenumber.value);
+                subscriptionEntry.custom.phoneNumbers = phoneNumbersArray
             } else {
                 subscriptionEntry = CustomObjectMgr.createCustomObject(type, subscriptionForm.customer.productsubscribeid.value);
-                subscriptionEntry.custom.clientNumber = `${subscriptionForm.customer.phonenumber.value}&`;
-                subscriptionEntry.custom.productName = `${subscriptionForm.customer.productsubscribename.value}&`;
+                subscriptionEntry.custom.phoneNumbers = new Array(subscriptionForm.customer.phonenumber.value);
+                subscriptionEntry.custom.productName = subscriptionForm.customer.productsubscribename.value
             }
 
         })

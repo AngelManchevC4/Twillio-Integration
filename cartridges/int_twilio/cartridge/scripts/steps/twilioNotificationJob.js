@@ -11,43 +11,39 @@ var twilioSendSms = require("~/cartridge/scripts/services/twilioSendSms")
 module.exports.execute = function () {
     var notificationObjIterator = CustomObjectMgr.getAllCustomObjects('Product-Subscribe-Notification');
 
-    // twilioSendSms.twilioSendSms().call({ To: "+359884676766", From: "+15168064395", Body: "hihi" });
-
-    // var file;
-    // var fileWrite;
-    // var csv;
-
     var customersProductID;
-    var customersPhone;
     var customersProductName;
+    var customersPhones;
+
     try {
-        // file = new File([File.IMPEX, "notification", "notification.csv"].join(File.SEPARATOR));
-        // fileWrite = new FileWriter(file);
-
-        // csv = new CSVStreamWriter(fileWrite);
-        // csv.writeNext(["phone", "creatdate", "customerobj"]);
-        // csv.writeNext(["---", "---", "---", "---"]);
-
-
 
         while (notificationObjIterator.hasNext()) {
-            var customers = notificationObjIterator.next();
-            customersPhone = customers.custom.clientNumber.split('&');
-            customersProductName = customers.custom.productName.split('&');
-            customersProductID = customers.custom.productID
-            // customersPhone.forEach(element => {
-            //     twilioSendSms.twilioSendSms().call({ To: element, From: "+15168064395", Body: `Product : ${customersProductName.element} with ID: ${customersProductID.element} is back in stock !!!`});
-            // });
+
+            var notificationObj = notificationObjIterator.next();
+
+            customersPhones = notificationObj.custom.phoneNumbers;
+            customersProductID = notificationObj.custom.productID;
+            customersProductName = notificationObj.custom.productName;
+
+            // for (var i = 0; i < customersPhones.length; i++) {
+            //     twilioSendSms.twilioSendSms().call({ To: customersPhones[i], From: "+15168064395", Body: `Product : ${customersProductName} with ID: ${customersProductID} is back in stock !!!` });
+            // }
+
+            customersPhones.forEach(element => {
+                twilioSendSms.twilioSendSms().call({ To: element, From: "+15168064395", Body: `Product : ${customersProductName} with ID: ${customersProductID} is back in stock !!!`});
+            });
 
             //need to add logic to check if the product is with quantity higher than 0 if yes
             //                                                                                =>send sms, delete numbers
             //                                                                         if no
             //                                                                                =>do nothing
             //need to add logic to delete all the numbers and even the productId after sending the sms
-        }
 
-        for (var i = 0; i < customersPhone.length-2; i++) {
-            twilioSendSms.twilioSendSms().call({ To: customersPhone[i], From: "+15168064395", Body: `Product : ${customersProductName[i]} with ID: ${customersProductID[i]} is back in stock !!!` });
+
+            // Transaction.wrap(function () {
+            //     CustomObjectMgr.remove(customers);
+            // })
+
         }
 
     } catch (e) {
