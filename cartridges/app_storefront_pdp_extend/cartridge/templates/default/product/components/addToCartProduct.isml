@@ -1,19 +1,28 @@
 <div class="row cart-and-ipay">
 
-    <isif condition="${product.available}">
-        <div class="col-sm-12">
-            <input type="hidden" class="add-to-cart-url" value="${pdict.addToCartUrl}">
+    <iscomment>
+        <isif condition="${product.available}">
+    </iscomment>
+    <div id="addToCartButton" class="col-sm-12 ${!product.avaiable? "d-none" :""} ">
+        <input type="hidden" class="add-to-cart-url" value="${pdict.addToCartUrl}">
 
-            <button class="add-to-cart btn btn-primary" data-toggle="modal" data-target="#chooseBonusProductModal"
-                data-pid="${product.id}" ${!product.readyToOrder || !product.available ? "disabled" : ""}>
-                <i class="fa fa-shopping-bag"></i>
-                ${Resource.msg('button.addtocart', 'common', null)}
-            </button>
+        <button class="add-to-cart btn btn-primary" data-toggle="modal" data-target="#chooseBonusProductModal"
+            data-pid="${product.id}" ${!product.readyToOrder || !product.available ? "disabled" : ""}>
+            <i class="fa fa-shopping-bag"></i>
+            ${Resource.msg('button.addtocart', 'common', null)}
+        </button>
 
-        </div>
+    </div>
+    <iscomment>
     <iselse/>
+    </iscomment>
+    <div class="${product.avaiable? "d-none" :"" }">
         <isinclude template="product/components/notifySubscription" />
-    </isif>
+    </div>
+
+    <iscomment>
+        </isif>
+    </iscomment>
 
     <isinclude template="product/components/addToCartButtonExtension" />
 

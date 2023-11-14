@@ -13,11 +13,16 @@ $(document).ready(function () {
     var $successAlert = $("#successAlert");
 
     var $phoneForm = $("#phoneForm");
+    var $addToCartButton = $("#addToCartButton");
 
     var phoneRegex = /^\+359\d{9}$/;
 
     $errorAlert.css("display", "none");
     $successAlert.css("display", "none");
+
+    // $phoneForm.addClass('d-none')
+    // $addToCartButton.addClass('d-block')
+
 
     $phoneInput.on("input", function (e) {
 
@@ -55,14 +60,11 @@ $(document).ready(function () {
         })
     })
 
-    $formButton.click(function () {
 
-    })
-
-    if ($customerPhone.val()) {
-        $(window).on('load', function () {
-            $phoneInput.val($customerPhone.val());
-        });
+    if (phoneRegex.test($customerPhone.val())) {
+        $phoneInput.val($customerPhone.val());
+    } else {
+        $phoneInput.val('');
     }
 
 })
