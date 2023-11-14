@@ -1,15 +1,9 @@
-<isscript>
-        var assets = require('*/cartridge/scripts/assets');
-        assets.addJs('/js/notify.js');
-</isscript>
-
-
 <form id="phoneForm" class="row" action="${URLUtils.url('Product-Subscribe')}" method="POST">
 
     <div class="col-sm-12 text-left">
         <isif condition="${!product.available}">
             <h5>
-                ${Resource.msg('label.input.info.subscription', 'subscription',null)}
+                ${Resource.msg('label.input.info.subscription', 'subscription', null)}
             </h5>
             <isprint value=" ${clientAssetMessage.body ? clientAssetMessage.body : ""}" encoding="off" />
 
@@ -17,9 +11,6 @@
     </div>
 
     <div class="col-sm-8">
-        <iscomment> <label class="form-control-label" for="notificationSubscription">
-                <isprint value="${pdict.subscriptionForm.customer.phonenumber.label}" encoding="htmlcontent" />
-            </label> </iscomment>
         <input type="text" class="form-control" id="phoneNumberInput" placeholder="Enter a Phone Number" <isprint
             value="${pdict.subscriptionForm.customer.phonenumber.attributes}" encoding="off" /> />
         <div class="invalid-feedback"></div>
@@ -39,72 +30,15 @@
     <input type="hidden" id="customerPhone" value="${customerPhoneNumber}" />
 
     <input type="hidden" id="csrfToken" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}" />
+    <div class="col-sm-12 custom-subscription--alerts">
+        <div id="errorAlert" class="alert-danger col-sm-12 mt-2" role="alert">
+            ${Resource.msg('alert.label.error', 'subscription', null)}
+        </div>
 
-    <div id="errorAlert" class="alert-danger col-sm-12 mt-2" role="alert">
-        ${Resource.msg('alert.label.error', 'subscription',null)}
+        <div id="successAlert" class="alert-success col-sm-12 mt-2" role="alert">
+            ${Resource.msg('alert.label.success', 'subscription', null)}
+        </div>
     </div>
 
-    <div id="successAlert" class="alert-success col-sm-12 mt-2" role="alert">
-        ${Resource.msg('alert.label.success', 'subscription',null)}
-    </div>
 
 </form>
-
-
-
-<iscomment>
-    <script>
-    let phoneInput = document.getElementById("phoneNumberInput");
-    let customerPhone = document.getElementById("customerPhone");
-    let formButton = document.getElementById("formButton");
-
-    let errorAlert = document.getElementById("errorAlert");
-    let successAlert = document.getElementById("successAlert");
-    errorAlert.style.display ="none";
-    successAlert.style.display ="none";
-
-    let phoneForm = document.getElementById("phoneForm");
-
-    let phoneRegex = /^\(?([2-9][0-8][0-9])\)?[\-\. ]?([2-9][0-9]{2})[\-\. ]?([0-9]{4})(\s*x[0-9]+)?$/;
-
-    phoneInput.addEventListener("input",function(e){
-
-        let inputValue = e.target.value;
-
-        // (!phoneRegex.test(inputValue)) ? phoneInput.classList.add('is-invalid') : phoneInput.classList.remove('is-invalid')
-        
-        if(!phoneRegex.test(inputValue)){
-            phoneInput.classList.add('is-invalid')
-            errorAlert.style.display ="block"; 
-        }else{
-            phoneInput.classList.remove('is-invalid')
-            errorAlert.style.display ="none";
-        }
-    })
-
-    phoneForm.addEventListener("submit",function(){
-        successAlert.style.display="block";
-    })
-
-    formButton.addEventListener("click",function(){
-        console.log("test");
-    })
-
-    if(customerPhone){
-            window.addEventListener("load",function(){
-            phoneInput.value = customerPhone.value;
-            console.log(customerPhone);
-        })
-    }
-
-
-
-
-    // phoneForm.addEventListener("submit",function(event){
-    //     event.preventDefault();
-
-    //     console.log(phoneInput.value);
-    // })
-
-</script>
-</iscomment>

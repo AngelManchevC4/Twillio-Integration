@@ -5,7 +5,9 @@ var CSVStreamWriter = require('dw/io/CSVStreamWriter');
 var Transaction = require('dw/system/Transaction');
 var Logger = require('dw/system/Logger');
 var ProductMgr = require('dw/catalog/ProductMgr');
-var ProductInventoryMgr = require('dw/catalog/ProductInventoryMgr');
+var Resource = require('dw/web/Resource');
+var SitePreferences = require('dw/system/SitePreferences');
+var Site = require('dw/system/Site');
 var twilioSendSms = require("~/cartridge/scripts/services/twilioSendSms")
 
 module.exports.execute = function () {
@@ -26,20 +28,31 @@ module.exports.execute = function () {
             customersProductName = notificationObj.custom.productName;
 
             var product = ProductMgr.getProduct(customersProductID);
-            var productATSQuantity = ProductInventoryMgr.getInventoryList("inventory_m").getRecord(customersProductID).ATS.value;
+            var isProductOrderable = product.availabilityModel.inStock;
 
-            if (productATSQuantity > 0) {
+
+            if (isProductOrderable) {
                 customersPhones.forEach(element => {
-                    twilioSendSms.twilioSendSms().call({ To: element, From: "+15168064395", Body: `Product : ${customersProductName} with ID: ${customersProductID} is back in stock !!!` });
-                    Transaction.wrap(function () {
-                        CustomObjectMgr.remove(notificationObj);
-                    })
+
+                    let smsSenderPhoneNumber = Site.getCurrent().getCustomPreferenceValue('SmsPhoneNumberSenderForTwilio');
+
+                    let isServiceFailed = twilioSendSms.twilioSendSms().call({ To: element, From: smsSenderPhoneNumber, Body: Resource.msgf('twillio.service.instock.body.label', 'jobs', null, [customersProductName, customersProductID]) }).isOk();
+
+                    if (isServiceFailed) {
+                        let error = new Error("Service call failed");
+                        return error;
+                    } else {
+                        Transaction.wrap(function () {
+                            CustomObjectMgr.remove(notificationObj);
+                        })
+                    }
+
                 });
 
             } else {
                 customersPhones.forEach(element => {
                     twilioSendSms.twilioSendSms().call({
-                        To: element, From: "+15168064395", Body: `Product isn't restocked yet. You will be contacted when restocked !`
+                        To: element, From: "+15168064395", Body: Resource.msg('twillio.service.outofstock.body.label', 'jobs', null)
                     });
                 });
             }

@@ -1,9 +1,6 @@
 <div class="row cart-and-ipay">
 
-    <iscomment>
-        <isif condition="${product.available}">
-    </iscomment>
-    <div id="addToCartButton" class="col-sm-12 ${!product.avaiable? "d-none" :""} ">
+    <div id="addToCartButton" class="col-sm-12 ${!product.avaiable ? " d-none" : ""} ">
         <input type="hidden" class="add-to-cart-url" value="${pdict.addToCartUrl}">
 
         <button class="add-to-cart btn btn-primary" data-toggle="modal" data-target="#chooseBonusProductModal"
@@ -13,16 +10,10 @@
         </button>
 
     </div>
-    <iscomment>
-    <iselse/>
-    </iscomment>
-    <div class="${product.avaiable? "d-none" :"" }">
+
+    <div class="${product.avaiable ? " d-none" : ""}">
         <isinclude template="product/components/notifySubscription" />
     </div>
-
-    <iscomment>
-        </isif>
-    </iscomment>
 
     <isinclude template="product/components/addToCartButtonExtension" />
 

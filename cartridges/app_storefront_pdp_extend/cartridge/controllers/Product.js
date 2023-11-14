@@ -35,7 +35,7 @@ var base = server.extend(module.superModule);
 * @param {renders} - isml
 * @param {serverfunction} - get
 */
-server.replace('Show', server.middleware.https, csrfProtection.generateToken, cache.applyPromotionSensitiveCache, consentTracking.consent, function (req, res, next) {
+server.append('Show', server.middleware.https, csrfProtection.generateToken, cache.applyPromotionSensitiveCache, consentTracking.consent, function (req, res, next) {
     var ContentMgr = require('dw/content/ContentMgr');
     var productHelper = require('*/cartridge/scripts/helpers/productHelpers');
     var showProductPageHelperResult = productHelper.showProductPage(req.querystring, req.pageMetaData);
@@ -49,6 +49,8 @@ server.replace('Show', server.middleware.https, csrfProtection.generateToken, ca
     subscriptionForm.clear();
 
     var customerContent = ContentMgr.getContent("QuantityNotificationMsg");
+
+//do with append    
 
     if (!showProductPageHelperResult.product.online && productType !== 'set' && productType !== 'bundle') {
         res.setStatusCode(404);

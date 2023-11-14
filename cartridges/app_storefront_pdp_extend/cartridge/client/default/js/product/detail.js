@@ -4,11 +4,9 @@ function triggerChange(product, $productContainer) {
     if (product.available) {
         $productContainer.find("#addToCartButton").removeClass('d-none')
         $productContainer.find("#phoneForm").addClass('d-none')
-        console.log($productContainer);
     } else {
         $productContainer.find("#addToCartButton").addClass('d-none')
         $productContainer.find("#phoneForm").removeClass('d-none');
-        console.log($productContainer);
     }
 }
 
@@ -36,7 +34,7 @@ base.updateAvailability = function () {
                 .html(allReady ? response.message : response.resources.info_selectforstock);
         }
 
-        triggerChange(response.product,response.$productContainer);
+        triggerChange(response.product, response.$productContainer);
     });
 
 }

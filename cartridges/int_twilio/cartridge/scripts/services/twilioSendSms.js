@@ -14,7 +14,7 @@ function twilioSendSms() {
         },
 
         filterLogMessage: function (msg) {
-            let message = msg.replace(/"cost_in_credits":"\d+"/, '"cost_in_credits":"$$$$$$$$$$$$$$$$$$$$$$$$$$$$"');
+            let message = msg.replace(/"to":"\d+"/, '"to":"##########"');
             return message;
         },
     })

@@ -49,8 +49,7 @@ function getAllAttrValues(
             displayValue: value.displayValue,
             value: value.value,
             selected: isSelected,
-            selectable:true,
-            ordable: variationModel.hasOrderableVariants(attr, value),
+            selectable: true,
         };
 
         valueUrl = (isSelected && endPoint !== 'Show')
