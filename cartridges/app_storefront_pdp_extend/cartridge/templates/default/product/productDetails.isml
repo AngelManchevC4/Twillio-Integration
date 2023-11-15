@@ -1,6 +1,7 @@
 <isdecorate template="common/layout/page">
 
     <isscript>
+        var ProductMgr = require("dw/catalog/ProductMgr");
         var assets = require('*/cartridge/scripts/assets');
         assets.addJs('/js/productDetail.js');
         assets.addJs('/js/notify.js');
@@ -14,7 +15,8 @@
     <isset name="clientAssetMessage" value="${pdict.content.custom}" scope="page" />
     <isset name="subscriptionForm" value="${pdict.subscriptionForm}" scope="page" />
     <isset name="customerPhoneNumber" value="${pdict.customerPhone}" scope="page" />
-
+    <isset name="ProductMgr" value="${ProductMgr}" scope="page" />
+    
 
     <isobject object="${product.raw}" view="detail" />
     <div class="container product-detail product-wrapper" data-pid="${product.id}">
