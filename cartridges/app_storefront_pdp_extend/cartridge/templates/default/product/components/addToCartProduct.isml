@@ -1,14 +1,6 @@
-
-<isscript>
-
-</isscript>
-
-
-
-
 <div class="row cart-and-ipay">
 
-    <div id="addToCartButton" class="col-sm-12 ${!ProductMgr.getProduct(product.id).availabilityModel.inStock ? "d-none" : ""} ">
+    <div id="addToCartButton" class="col-sm-12 ${!(product.availabilityModel.inStock) ? "d-none" : ""} ">
         <input type="hidden" class="add-to-cart-url" value="${pdict.addToCartUrl}">
 
         <button class="add-to-cart btn btn-primary" data-toggle="modal" data-target="#chooseBonusProductModal"
@@ -19,10 +11,10 @@
 
     </div>
 
-    <h1></h1>
-
-    <div class="${ProductMgr.getProduct(product.id).availabilityModel.inStock ? "d-none" : ""}">
+    <div class="col-sm-12 text-left ${product.availabilityModel.inStock ? "d-none" : ""}">
+        
         <isinclude template="product/components/notifySubscription" />
+ 
     </div>
 
     <isinclude template="product/components/addToCartButtonExtension" />

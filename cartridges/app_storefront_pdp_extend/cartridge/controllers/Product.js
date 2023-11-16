@@ -37,9 +37,10 @@ var base = server.extend(module.superModule);
 */
 
 server.append('Show', server.middleware.https, csrfProtection.generateToken, function (req, res, next) {
+    var notificationHelper = require('*/cartridge/scripts/helpers/notificationHelpers.js');
 
-    var ContentMgr = require('dw/content/ContentMgr');
     var productHelper = require('*/cartridge/scripts/helpers/productHelpers');
+
     var showProductPageHelperResult = productHelper.showProductPage(req.querystring, req.pageMetaData);
 
     var customerPhone;
@@ -49,24 +50,21 @@ server.append('Show', server.middleware.https, csrfProtection.generateToken, fun
     var subscriptionForm = server.forms.getForm('subscription');
     subscriptionForm.clear();
 
-    var customerContent = ContentMgr.getContent("QuantityNotificationMsg");
+    var customerContent = notificationHelper.getClientContentAsset("asset-ClientSubscriptionFormMessage");
 
     res.render(showProductPageHelperResult.template, {
         customerContent: customerContent,
         subscriptionForm: subscriptionForm,
-        customerPhone: customerPhone
+        customerPhone: customerPhone,
     })
 
     next();
-}, pageMetaData.computedPageMetaData);
+});
 
 server.post('Subscribe', server.middleware.https, csrfProtection.validateAjaxRequest, function (req, res, next) {
+    var notificationHelper = require('*/cartridge/scripts/helpers/notificationHelpers.js');
 
     var Transaction = require('dw/system/Transaction');
-    var CustomerMgr = require('dw/customer/CustomerMgr');
-    var Resource = require('dw/web/Resource');
-    var URLUtils = require('dw/web/URLUtils');
-    var CustomObjectMgr = require('dw/object/CustomObjectMgr');
 
     var type = "Product-Subscribe-Notification";
 
@@ -74,25 +72,16 @@ server.post('Subscribe', server.middleware.https, csrfProtection.validateAjaxReq
 
     if (subscriptionForm.valid) {
         Transaction.wrap(function () {
-            var subscriptionEntry = CustomObjectMgr.getCustomObject(type, subscriptionForm.customer.productsubscribeid.value);
-            if (subscriptionEntry) {
-                var subsArray = subscriptionEntry.custom.phoneNumbers;
-                let phoneNumbersArray = [];
-                for (let i = 0; i < subsArray.length; i++) {
-                    phoneNumbersArray.push(subsArray[i]);
-                }
-                phoneNumbersArray.push(subscriptionForm.customer.phonenumber.value);
-                subscriptionEntry.custom.phoneNumbers = phoneNumbersArray
-            } else {
-                subscriptionEntry = CustomObjectMgr.createCustomObject(type, subscriptionForm.customer.productsubscribeid.value);
-                subscriptionEntry.custom.phoneNumbers = new Array(subscriptionForm.customer.phonenumber.value);
-                subscriptionEntry.custom.productName = subscriptionForm.customer.productsubscribename.value
-            }
-
+            notificationHelper.addSubscriptionEntry(type,
+                subscriptionForm.customer.productsubscribeid.value,
+                subscriptionForm.customer.phonenumber.value,
+                subscriptionForm.customer.productsubscribename.value)
         })
     }
 
-    res.redirect("Home-Show");
+    res.json({
+        message: "Success"
+    });
 
     return next();
 

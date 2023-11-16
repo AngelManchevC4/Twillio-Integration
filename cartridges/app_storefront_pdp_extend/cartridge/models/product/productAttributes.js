@@ -123,7 +123,6 @@ function VariationAttributesModel(variationModel, attrConfig, selectedOptionsQue
         var values = getAllAttrValues(variationModel, selectedValue, attr, attrConfig.endPoint,
             selectedOptionsQueryParams, quantity);
         var resetUrl = getAttrResetUrl(values, attr.ID);
-
         if ((Array.isArray(attrConfig.attributes)
             && attrConfig.attributes.indexOf(attr.attributeID) > -1)
             || attrConfig.attributes === '*') {
@@ -134,14 +133,14 @@ function VariationAttributesModel(variationModel, attrConfig, selectedOptionsQue
                 swatchable: isSwatchable(attr.attributeID),
                 displayValue: selectedValue && selectedValue.displayValue ? selectedValue.displayValue : '',
                 values: values,
-                resetUrl: resetUrl
+                resetUrl: resetUrl,
             });
         } else if (attrConfig.attributes === 'selected') {
             result.push({
                 displayName: attr.displayName,
                 displayValue: selectedValue && selectedValue.displayValue ? selectedValue.displayValue : '',
                 attributeId: attr.attributeID,
-                id: attr.ID
+                id: attr.ID,
             });
         }
     });

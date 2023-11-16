@@ -1,13 +1,6 @@
 <?xml version="1.0"?>
 <form xmlns="http://www.demandware.com/xml/form/2008-04-19" secure="false">
 
-
-	<field
-		formid="infomessage"
-		label="label.input.info.subscription"
-		mandatory="false"
-		type="string" />
-
 	<group formid="customer">
 
 		<field

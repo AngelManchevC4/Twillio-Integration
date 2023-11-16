@@ -10,6 +10,8 @@ function triggerChange(product, $productContainer) {
     }
 }
 
+
+
 base.updateAvailability = function () {
     $('body').on('product:updateAvailability', function (e, response) {
         $('div.availability', response.$productContainer)
@@ -57,6 +59,47 @@ base.updateAttribute = function () {
         console.log($("#phoneForm").val());
 
     })
+}
+
+base.notify = function () {
+
+    $(document).ready(function () {
+        
+        $("#successAlert").addClass("d-none");
+        $("#errorAlert").addClass("d-none");
+
+        $("#phoneForm").submit(function (e) {
+            e.preventDefault();
+
+            var formData = $("#phoneForm").serialize();
+
+            $("#successAlert").removeClass("d-none");
+
+            $.ajax({
+                type: "POST",
+                url: $("#phoneForm").attr("action"),
+                data: formData,
+                dataType: "text",
+                success: function () {
+                    $('body').trigger('form:success', this);
+                },
+                error: function () {
+                    $('body').trigger('form:error', this);
+                }
+            })
+        })
+    })
+
+
+    $("body").on('form:success', function (e, response) {
+        $("#successAlert").addClass('d-none');
+        $("#errorAlert").addClass('d-none');
+    })
+    $("body").on('form:error', function (e, response) {
+        $("#successAlert").addClass('d-none');
+        $("#errorAlert").removeClass('d-none');
+    })
+
 }
 
 module.exports = base;

@@ -30,31 +30,29 @@ module.exports.execute = function () {
             var product = ProductMgr.getProduct(customersProductID);
             var isProductOrderable = product.availabilityModel.inStock;
 
+            let isServiceSuccess
 
             if (isProductOrderable) {
                 customersPhones.forEach(element => {
-
                     let smsSenderPhoneNumber = Site.getCurrent().getCustomPreferenceValue('SmsPhoneNumberSenderForTwilio');
-
-                    let isServiceFailed = twilioSendSms.twilioSendSms().call({ To: element, From: smsSenderPhoneNumber, Body: Resource.msgf('twillio.service.instock.body.label', 'jobs', null, [customersProductName, customersProductID]) }).isOk();
-
-                    if (isServiceFailed) {
-                        let error = new Error("Service call failed");
-                        return error;
-                    } else {
-                        Transaction.wrap(function () {
-                            CustomObjectMgr.remove(notificationObj);
-                        })
-                    }
-
+                    isServiceSuccess = twilioSendSms.twilioSendSms().call({ To: element, From: smsSenderPhoneNumber, Body: Resource.msgf('twillio.service.instock.body.label', 'jobs', null, [customersProductName, customersProductID]) }).isOk();
                 });
 
             } else {
                 customersPhones.forEach(element => {
                     twilioSendSms.twilioSendSms().call({
-                        To: element, From: "+15168064395", Body: Resource.msg('twillio.service.outofstock.body.label', 'jobs', null)
+                        To: element, From: smsSenderPhoneNumber, Body: Resource.msg('twillio.service.outofstock.body.label', 'jobs', null)
                     });
                 });
+            }
+
+            if (isServiceSuccess) {
+                Transaction.wrap(function () {
+                    CustomObjectMgr.remove(notificationObj);
+                })
+            } else {
+                let error = new Error("Service call failed");
+                return error;
             }
 
         }
