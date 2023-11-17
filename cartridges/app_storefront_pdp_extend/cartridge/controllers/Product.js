@@ -66,7 +66,7 @@ server.post('Subscribe', server.middleware.https, csrfProtection.validateAjaxReq
 
     var Transaction = require('dw/system/Transaction');
 
-    var type = "Product-Subscribe-Notification";
+    var type = "PRODUCT-SUBSCRIBE-NOTIFICATION";
 
     var subscriptionForm = server.forms.getForm('subscription');
 

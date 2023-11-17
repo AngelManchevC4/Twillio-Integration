@@ -11,7 +11,7 @@ var Site = require('dw/system/Site');
 var twilioSendSms = require("~/cartridge/scripts/services/twilioSendSms")
 
 module.exports.execute = function () {
-    var notificationObjIterator = CustomObjectMgr.getAllCustomObjects('Product-Subscribe-Notification');
+    var notificationObjIterator = CustomObjectMgr.getAllCustomObjects('PRODUCT-SUBSCRIBE-NOTIFICATION');
 
     var customersProductID;
     var customersProductName;
