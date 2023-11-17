@@ -40,8 +40,6 @@ server.get('Show', server.middleware.https, csrfProtection.generateToken, functi
 
     var customerContent = notificationHelper.getClientContentAsset("asset-ClientSubscriptionFormMessage");
 
-    response.setExpires(0);
-
     res.render("product/components/notifySubscription", {
         customerContent: customerContent,
         subscriptionForm: subscriptionForm,
