@@ -75,6 +75,8 @@ base.notify = function () {
 
             $("#successAlert").removeClass("d-none");
 
+            $.spinner().start();
+
             $.ajax({
                 type: "POST",
                 url: $("#phoneForm").attr("action"),
@@ -82,9 +84,11 @@ base.notify = function () {
                 dataType: "text",
                 success: function () {
                     $('body').trigger('form:success', this);
+                    $.spinner().stop()
                 },
                 error: function () {
                     $('body').trigger('form:error', this);
+                    $.spinner().stop()
                 }
             })
         })

@@ -1,7 +1,13 @@
-<form id="phoneForm" class="row" action="${URLUtils.url('Product-Subscribe')}" method="POST">
+<isscript>
+        var assets = require('*/cartridge/scripts/assets');
+        assets.addJs('/js/productDetail.js');
+        assets.addCss('/css/product/detail.css');
+        assets.addCss('/css/product/alert.css');
+</isscript>
 
+<form id="phoneForm" class="row" action="${URLUtils.url('Product-Subscribe')}" method="POST">
     <div class="col-sm-12 text-left pl-0">
-        <isif condition="${!product.available}">
+        <isif condition="${!pdict.product.available}">
             <h5>
                 ${Resource.msg('label.input.info.subscription', 'subscription', null)}
             </h5>
@@ -11,7 +17,8 @@
     </div>
 
     <div class="col-sm-8 pl-0">
-        <input type="text" class="form-control" id="phoneNumberInput" value="${customerPhoneNumber ? customerPhoneNumber : ""}"
+        <input type="text" class="form-control" id="phoneNumberInput"
+            value="${pdict.customerPhone ? pdict.customerPhone : ""}"
             placeholder="${Resource.msg('input.placeholder.enter.phone.label', 'subscription', null)}" <isprint
             value="${pdict.subscriptionForm.customer.phonenumber.attributes}" encoding="off" /> />
         <div class="invalid-feedback"></div>
@@ -20,18 +27,18 @@
     <button id="formButton" type="submit" class="btn btn-success col-sm-4">${Resource.msg('notify.label.button', 'subscription', null)}
     </button>
 
-    <input type="hidden" value="${product.id}" <isprint
+    <input type="hidden" value="${pdict.product.pid}" <isprint
         value="${pdict.subscriptionForm.customer.productsubscribeid.attributes}" encoding="off" />
     />
 
-    <input type="hidden" value="${product.productName}" <isprint
+    <input type="hidden" value="${pdict.product.productName}" <isprint
         value="${pdict.subscriptionForm.customer.productsubscribename.attributes}" encoding="off" />
     />
 
     <input type="hidden" id="customerPhone" value="${pdict.customerPhone}" />
 
     <input type="hidden" id="csrfToken" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}" />
-    <div class="col-sm-12 pr-0 pl-0">
+    <div class="col-sm-12 pl-0 pr-0">
         <div id="errorAlert" class="alert-danger col-sm-12 mt-2" role="alert">
             ${Resource.msg('alert.label.error', 'subscription', null)}
         </div>

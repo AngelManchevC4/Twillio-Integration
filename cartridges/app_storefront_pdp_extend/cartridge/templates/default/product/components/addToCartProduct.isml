@@ -12,9 +12,7 @@
     </div>
 
     <div class="col-sm-12 text-left ${product.availabilityModel.inStock ? "d-none" : ""}">
-        
-        <isinclude template="product/components/notifySubscription" />
- 
+        <isinclude url="${URLUtils.url('NotifySubscription-Show', 'pid', product.id, 'productName',product.productName,'productAvailability',product.available)}" />
     </div>
 
     <isinclude template="product/components/addToCartButtonExtension" />
