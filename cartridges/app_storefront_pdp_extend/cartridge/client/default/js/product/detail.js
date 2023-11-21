@@ -10,8 +10,6 @@ function triggerChange(product, $productContainer) {
     }
 }
 
-
-
 base.updateAvailability = function () {
     $('body').on('product:updateAvailability', function (e, response) {
         $('div.availability', response.$productContainer)
@@ -93,7 +91,6 @@ base.notify = function () {
             })
         })
     })
-
 
     $("body").on('form:success', function (e, response) {
         $("#successAlert").addClass('d-none');

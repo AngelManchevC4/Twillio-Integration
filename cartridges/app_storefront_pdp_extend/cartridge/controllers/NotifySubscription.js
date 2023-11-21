@@ -26,10 +26,11 @@ var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
  * @param {serverfunction} - get
  */
 server.get('Show', server.middleware.https, csrfProtection.generateToken, function (req, res, next) {
+    var ProductMgr = require("dw/catalog/ProductMgr")
 
-    var product = req.querystring;
-    
-    var notificationHelper = require('*/cartridge/scripts/helpers/notificationHelpers.js');
+    var productID = req.querystring.pid;
+
+    var contentAssetHelper = require('*/cartridge/scripts/helpers/contentAssetHelpers.js');
 
     var customerPhone;
 
@@ -38,13 +39,17 @@ server.get('Show', server.middleware.https, csrfProtection.generateToken, functi
     var subscriptionForm = server.forms.getForm('subscription');
     subscriptionForm.clear();
 
-    var customerContent = notificationHelper.getClientContentAsset("asset-ClientSubscriptionFormMessage");
+    var customerContent = contentAssetHelper.getClientContentAsset("asset-ClientSubscriptionFormMessage");
 
     res.render("product/components/notifySubscription", {
         customerContent: customerContent,
         subscriptionForm: subscriptionForm,
         customerPhone: customerPhone,
-        product:product
+        product:{
+            pid:productID,
+            productName: ProductMgr.getProduct(productID).getName(),
+            available: ProductMgr.getProduct(productID).getAvailabilityModel().isInStock()
+        }
     })
 
     next();
