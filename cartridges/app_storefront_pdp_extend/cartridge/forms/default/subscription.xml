@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<form xmlns="http://www.demandware.com/xml/form/2008-04-19" secure="false">
+
+	<group formid="customer">
+
+		<field
+			formid="phonenumber"
+			label="label.input.phone.profile"
+			mandatory="true"
+			regexp="^\+359\d{9}$"
+			missing-error="error.message.required"
+			parse-error="error.message.parse.phone.profile.form"
+			type="string" />
+
+		<field
+			formid="productsubscribeid"
+			missing-error="error.message.required"
+			type="string"
+			mandatory="true" />
+
+		<field
+			formid="productsubscribename"
+			missing-error="error.message.required"
+			type="string"
+			mandatory="true" />
+
+	</group>
+</form>

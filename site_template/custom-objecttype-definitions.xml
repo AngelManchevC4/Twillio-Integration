@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata xmlns="http://www.demandware.com/xml/impex/metadata/2006-10-31">
+    <custom-type type-id="PRODUCT_SUBSCRIBE_NOTIFICATION">
+        <display-name xml:lang="x-default">Product ID</display-name>
+        <staging-mode>no-staging</staging-mode>
+        <storage-scope>organization</storage-scope>
+        <retention-days>30</retention-days>
+        <key-definition attribute-id="productID">
+            <type>string</type>
+            <min-length>0</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="phoneNumbers">
+                <display-name xml:lang="x-default">Phone Numbers</display-name>
+                <type>set-of-string</type>
+                <localizable-flag>false</localizable-flag>
+                <mandatory-flag>true</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="productName">
+                <display-name xml:lang="x-default">Product Name</display-name>
+                <type>string</type>
+                <localizable-flag>false</localizable-flag>
+                <mandatory-flag>true</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+        </attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="PRODUCT_SUBSCRIBE_NOTIFICATION">
+                <display-name xml:lang="x-default">PRODUCT_SUBSCRIBE_NOTIFICATION</display-name>
+                <attribute attribute-id="productID"/>
+                <attribute attribute-id="productName"/>
+                <attribute attribute-id="phoneNumbers"/>
+            </attribute-group>
+        </group-definitions>
+    </custom-type>
+</metadata>
