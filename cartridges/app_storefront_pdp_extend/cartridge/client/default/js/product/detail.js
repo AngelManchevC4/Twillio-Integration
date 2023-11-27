@@ -54,7 +54,6 @@ base.updateAttribute = function () {
         }
 
         $("#phoneForm").val(response.data.product.id);
-        console.log($("#phoneForm").val());
 
     })
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <metadata xmlns="http://www.demandware.com/xml/impex/metadata/2006-10-31">
-    <custom-type type-id="PRODUCT-SUBSCRIBE-NOTIFICATION">
+    <custom-type type-id="PRODUCT_SUBSCRIBE_NOTIFICATION">
         <display-name xml:lang="x-default">Product ID</display-name>
         <staging-mode>no-staging</staging-mode>
         <storage-scope>organization</storage-scope>
@@ -27,8 +27,8 @@
             </attribute-definition>
         </attribute-definitions>
         <group-definitions>
-            <attribute-group group-id="PRODUCT-SUBSCRIBE-NOTIFICATION">
-                <display-name xml:lang="x-default">PRODUCT-SUBSCRIBE-NOTIFICATION</display-name>
+            <attribute-group group-id="PRODUCT_SUBSCRIBE_NOTIFICATION">
+                <display-name xml:lang="x-default">PRODUCT_SUBSCRIBE_NOTIFICATION</display-name>
                 <attribute attribute-id="productID"/>
                 <attribute attribute-id="productName"/>
                 <attribute attribute-id="phoneNumbers"/>
